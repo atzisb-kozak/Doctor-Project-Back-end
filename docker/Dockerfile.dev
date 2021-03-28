@@ -1,0 +1,15 @@
+FROM node:buster
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install -g @nestjs/cli
+
+RUN npm install --only=production
+
+COPY . .
+
+EXPOSE 8080
+
+CMD [ "npm", "run", "start:dev" ]
