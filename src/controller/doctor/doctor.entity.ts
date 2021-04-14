@@ -1,5 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { 
+	Entity, 
+	Column, 
+	PrimaryGeneratedColumn, 
+	ManyToMany, 
+	JoinTable, 
+	BeforeInsert 
+} from 'typeorm';
 import { Specialities } from '@controller/specialities/specialities.entity';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class Doctor {
@@ -25,4 +33,9 @@ export class Doctor {
 	@ManyToMany(type => Specialities, specialities => specialities.doctors)
 	@JoinTable()
 	speciality: Specialities[];
+
+	@BeforeInsert()
+	async setPassword(): Promise<void> {
+		this.doctorPassword = await bcrypt.hash(this.doctorPassword, 10)
+	}
 }
