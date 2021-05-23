@@ -22,9 +22,20 @@ export class AuthService {
 	}
 
 	async validatePatient(username: string, password: string): Promise<any> {
-		const patient = await this.patientService.findOneUsername(username);
-		if (await compare(password, patient[0].patientPassword)) {
-			const { patientPassword, ...result} = patient[0];
+		const patients = await this.patientService.findOneUsername(username);
+
+		const findPatient = async() => {
+			const promisePatient = []
+			for (const patient of patients){
+				promisePatient.push(compare(password, patient.patientPassword))
+			}
+			return await Promise.race(promisePatient)
+		}
+
+		const patient = await findPatient();
+
+		if (patient) {
+			const { patientPassword, ...result} = patient;
 			return result;
 		}
 		return null;
