@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateDoctorDto } from './dto/create-doctor.dto'
-import { UpdateDoctorDto } from './dto/update-doctor.dto'
-import { Doctor } from './doctor.entity'
+import { CreateDoctorDto } from './dto/create-doctor.dto';
+import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { Doctor } from './doctor.entity';
 
 @Injectable()
 export class DoctorService {
@@ -29,6 +29,14 @@ export class DoctorService {
 
 	async findOne(doctorId: number): Promise<Doctor> {
 		return this.doctorRepository.findOne(doctorId);
+	}
+
+	async findOneUsername(doctorUsername: string): Promise<Doctor | undefined> {
+		return this.doctorRepository.find({
+			where: {
+				doctorUsername: doctorUsername
+			}
+		})[0];
 	}
 
 	async updateOne(doctorId: number, updatedoctordto: UpdateDoctorDto): Promise<void> {

@@ -35,6 +35,14 @@ export class PatientService {
 		return this.patientRepository.findOne(socialSecurity);
 	}
 
+	async findOneUsername(patientUsername: string): Promise<Patient[]> {
+		return this.patientRepository.find({
+			where: {
+				patientUsername: patientUsername,
+			}
+		});
+	}
+
 	async updateOne(socialSecurity: number, updatepatientdto: UpdatePatientDto): Promise<void> {
 		const patient = new Patient();
 		patient.patientName = updatepatientdto.patientName;
