@@ -4,6 +4,8 @@ import { getConnectionOptions, Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { PlanningModule } from './controller/planning/planning.module';
+import { SpecialitiesModule } from './controller/specialities/specialities.module';
 @Module({
 	imports: [
 		TypeOrmModule.forRootAsync({
@@ -14,6 +16,8 @@ import { AuthModule } from './auth/auth.module';
 			}
 		}),
 		AuthModule,
+		PlanningModule,
+		SpecialitiesModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

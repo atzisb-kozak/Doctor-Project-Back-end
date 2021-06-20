@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryColumn, JoinTable, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryColumn, JoinTable, BeforeInsert, ManyToOne } from 'typeorm';
 import { hash } from 'bcrypt';
+import { Planning } from '@controller/planning/entities/planning.entity';
 
 @Entity()
 export class Patient {
@@ -30,6 +31,9 @@ export class Patient {
 
 	@Column()
 	patientPassword: string;
+
+	@ManyToOne(() => Planning, planning => planning.patient)
+	plannings: Planning[];
 
 	@BeforeInsert()
 	async setPassword(): Promise<void> {

@@ -31,12 +31,12 @@ export class DoctorService {
 		return this.doctorRepository.findOne(doctorId);
 	}
 
-	async findOneUsername(doctorUsername: string): Promise<Doctor | undefined> {
+	async findOneUsername(doctorUsername: string): Promise<Doctor[]> {
 		return this.doctorRepository.find({
 			where: {
 				doctorUsername: doctorUsername
 			}
-		})[0];
+		});
 	}
 
 	async updateOne(doctorId: number, updatedoctordto: UpdateDoctorDto): Promise<void> {
