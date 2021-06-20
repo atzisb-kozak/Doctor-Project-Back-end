@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, JoinTable, BeforeInsert, ManyToOne } from 'typeorm';
 import { hash } from 'bcrypt';
-import { Planning } from '@controller/planning/entities/planning.entity';
+import { Planning } from '@controller/planning/planning.entity';
 
 @Entity()
 export class Patient {
