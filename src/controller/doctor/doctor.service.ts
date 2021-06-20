@@ -13,12 +13,7 @@ export class DoctorService {
 	) {}
 
 	async create(createdoctordto: CreateDoctorDto): Promise<Doctor> {
-		const doctor = new Doctor();
-		doctor.doctorName = createdoctordto.doctorName;
-		doctor.doctorFirstName = createdoctordto.doctorFirstName;
-		doctor.doctorUsername = createdoctordto.doctorUsername;
-		doctor.doctorEmail = createdoctordto.doctorEmail;
-		doctor.doctorPassword = createdoctordto.doctorPassword;
+		const doctor: Doctor = Object.assign(createdoctordto);
 
 		return this.doctorRepository.save(doctor)
 	}
@@ -40,12 +35,7 @@ export class DoctorService {
 	}
 
 	async updateOne(doctorId: number, updatedoctordto: UpdateDoctorDto): Promise<void> {
-		const doctor = new Doctor();
-		doctor.doctorName = updatedoctordto.doctorName;
-		doctor.doctorFirstName = updatedoctordto.doctorFirstName;
-		doctor.doctorUsername = updatedoctordto.doctorUsername;
-		doctor.doctorEmail = updatedoctordto.doctorEmail;
-		doctor.doctorPassword = updatedoctordto.doctorPassword;
+		const doctor: Doctor = Object.assign(updatedoctordto);
 
 		this.doctorRepository.update(doctorId, doctor)
 	}
