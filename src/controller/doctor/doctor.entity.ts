@@ -4,10 +4,12 @@ import {
 	PrimaryGeneratedColumn, 
 	ManyToMany, 
 	JoinTable, 
-	BeforeInsert 
+	BeforeInsert, 
+	ManyToOne
 } from 'typeorm';
-import { Specialities } from '@controller/specialities/specialities.entity';
+import { Speciality } from '@controller/specialities/entities/speciality.entity';
 import * as bcrypt from 'bcrypt';
+import { Planning } from '@controller/planning/entities/planning.entity';
 
 @Entity()
 export class Doctor {
@@ -30,9 +32,12 @@ export class Doctor {
 	@Column()
 	doctorPassword: string;
 
-	@ManyToMany(type => Specialities, specialities => specialities.doctors)
+	@ManyToOne(() => Planning, planning => planning.doctor)
+	plannings: Planning[];
+
+	@ManyToMany(type => Speciality, specialities => specialities.doctors)
 	@JoinTable()
-	speciality: Specialities[];
+	speciality: Speciality[];
 
 	@BeforeInsert()
 	async setPassword(): Promise<void> {
